@@ -18,17 +18,20 @@ def page_not_found(e):
 
 # ============ app routes ============= #
 
-@app.route("/confirm/<string:tag_lobby>")
+@app.route("/<string:tag_lobby>")
 def confirm_mail(tag_lobby):
-    response = requests.get("https://dubblocksite.herokuapp.com/get_match_status/" + tag_lobby)
+    response = requests.get("https://dubblocksite.herokuapp.com/get_lobby_status/" + tag_lobby)
     j_response = response.json()
     if int(j_response) == 0:  # se prepartita
-        pass
+        return render_template("prepartita.html")
     elif int(j_response) == 1:  # se in partita
-        pass
+        return render_template("partita.html")
     elif int(j_response) == 2:  # se non esiste
-        pass
+        return render_template("home.html")
 
+@app.route("/")
+def home():
+    return render_template("home.html")
 # ============ ### ============= #
 
 if __name__ == "__main__":
