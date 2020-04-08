@@ -88,6 +88,7 @@ button{
   width: 100%;
   text-align:center;
 }
+
 #players{
   margin: auto;
   margin-bottom: 30px;
@@ -119,9 +120,11 @@ button{
 
 .options{
     background-color: white;
-    margin: 10%;
+    margin: auto;
+    margin-top: 20%;
     border-radius: 20px;
     width: fit-content;
+    padding: 10px;
 }
 
 .options_wrapper{
@@ -177,7 +180,6 @@ button{
     position: absolute;
     left: 47px;
     top: 10px;
-    visibility: hidden;
     z-index: 1;
 }
 
@@ -191,14 +193,17 @@ button{
     position: absolute;
     left: 47px;
     bottom: 10px;
-    visibility: hidden;
     z-index: 1;
 }
 
 .arrow_up:hover{
-    border-color: white;
+    border-color: black;
 }
 
 .arrow_down:hover{
-    border-color: white;
+    border-color: black;
+}
+.conferma_wrapper{
+  padding-bottom: 10px;
+  text-align: center;
 }
