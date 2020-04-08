@@ -240,6 +240,9 @@ class Player{
             }
         };
 
+        try{
+            document.getElementById(this.listId).removeChild(document.getElementById(this.elementId));
+        }catch(e){}
         document.getElementById(this.listId).appendChild(div);
     }
 }

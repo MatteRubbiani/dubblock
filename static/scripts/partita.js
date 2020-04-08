@@ -2,8 +2,6 @@ var interval;
 
 $(document).ready(()=>{
     interval = setInterval(loadInfo, 100);
-
-    new Player(0, 1, "players", 3, false, 0, 5, 2, 0).appendToListOfPlayers();
 })
 
 function loadInfo(){
@@ -20,6 +18,9 @@ function loadInfo(){
                 users: [{corsia: null(se non sei tu), id: int, is_playing: boolean, livello: int, pedina_number: int, jolly_reveal: int, jolly_earthquake: int}...{}]
             }
             */
+           for(let user of data.users){
+                new Player(user.id, data.users.indexOf(user)+1, "players", user.pedina_number, user.is_playing, user.corsia, user.livello, user.jolly_reveal, user.jolly_earthquake).appendToListOfPlayers();
+           }
         }
     })
 }
