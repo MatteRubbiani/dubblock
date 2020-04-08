@@ -1,0 +1,22 @@
+p{
+  font-family: monospace
+}
+
+#title{
+  font-size: 50px;
+  padding-left: 50px;
+}
+
+#players{
+  margin-left: 50px;
+  margin-top: 50px;
+}
+
+.player{
+  font-size: 20px;
+  margin-top: 40px;
+}
+
+.player:hover{
+  font-style: italic;
+}
