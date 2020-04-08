@@ -1,0 +1,25 @@
+:root{
+    --theme-color: lightskyblue;
+}
+
+.match{
+    position: relative;
+    margin: 20px;
+}
+
+.corsia{
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    position: absolute;
+}
+
+.livello{
+    border-bottom: 1px solid white;
+    position: absolute;
+}
+
+.block{
+    background-color: gray;
+    position: absolute;
+    border-radius: 10px;
+}

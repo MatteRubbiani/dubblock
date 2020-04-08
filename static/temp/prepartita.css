@@ -1,0 +1,21 @@
+.--header{
+    width: 100%;
+}
+
+.players{
+    border: 1px solid white;
+    border-radius: 30px;
+    width: fit-content;
+    width: -moz-fit-content;
+    max-width: 80%;
+    height: fit-content;
+    height: -moz-fit-content;
+    margin-left: 10%;
+}
+
+.player{
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 20px;
+    margin: 15px;
+}
