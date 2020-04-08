@@ -44,7 +44,8 @@ function loadInfo(){
             },
             error: (jq)=>{
                 if(jq.status == 401){
-                    window.location.reload();
+                    clearInterval(t);
+                    window.location = window.location;
                 } else console.log(jq)
             }
         })
@@ -113,5 +114,17 @@ function popupSettings(){
             $("#settings_popup").show();
         },
         error: (jq)=>{console.log(jq)}
+    })
+}
+
+function startPartita(){
+    $.ajax({
+        url: BASE_URL+"start_partita/"+localStorage.getItem("UserId"),
+        type: "post",
+        contentType: "application/json",
+        dataType: "json",
+        data: JSON.stringify({blocchi: 3, corsie: 5, livelli: 9}),
+        success: ()=>{window.location = window.location;},
+        error: (jq)=>{console.log(jq);}
     })
 }

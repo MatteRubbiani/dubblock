@@ -202,6 +202,7 @@ class Player{
     appendToListOfPlayers(){
         let div = document.createElement("div");
         div.id = this.elementId;
+        div.style.width = "fit-content";
 
         let p = document.createElement("p");
         p.className = this.listPClassName;
