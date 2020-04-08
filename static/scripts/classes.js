@@ -179,6 +179,70 @@ class Block{
     }
 }
 
+class Player{
+    constructor(id, number, listId, colorId, isPlaying, corsia, livello, jollyReveal, jollyEarthquake){
+        this.id = id;
+        this.listId = listId;
+        this.listElementId = "list_element_player_"+id;
+
+        this.listPClassName = "player"
+        this.otherPlayerInfoClassName = "player_info";
+
+        this.pInnerHTML = "Giocatore "+number;
+
+        this.colorId = colorId;
+        this.isPlaying = isPlaying;
+        
+        this.corsia = corsia;
+        this.livello = livello;
+        this.jollyReveal = jollyReveal;
+        this.jollyEarthquake = jollyEarthquake;
+    }
+
+    appendToListOfPlayers(){
+        let div = document.createElement("div");
+        div.id = this.elementId;
+
+        let p = document.createElement("p");
+        p.className = this.listPClassName;
+        p.innerHTML = this.pInnerHTML;
+        p.style.color = coloriPedine[this.colorId];
+
+        let livello = document.createElement("p");
+        livello.className = this.otherPlayerInfoClassName;
+        livello.innerHTML = "Livello: "+this.livello;
+
+        let reveal = document.createElement("p");
+        reveal.className = this.otherPlayerInfoClassName;
+        reveal.innerHTML = "Jolly rivelazione rimanenti: "+this.jollyReveal;
+
+        let earthquake = document.createElement("p");
+        earthquake.className = this.otherPlayerInfoClassName;
+        earthquake.innerHTML = "Jolly terremoto rimanenti: "+this.jollyEarthquake;
+
+        div.appendChild(p);
+        div.appendChild(livello);
+        div.appendChild(reveal);
+        div.appendChild(earthquake);
+
+        div.onmouseover = ()=>{
+            p.style.fontWeight = 700;
+            for(let node of div.childNodes) node.style.display = "block";
+        };
+
+        div.onmouseout = ()=>{
+            p.style.fontWeight = "normal";
+            for(let node of div.childNodes) {
+                if(node != p){
+                    node.style.display = "none";
+                }  
+            }
+        };
+
+        document.getElementById(this.listId).appendChild(div);
+    }
+}
+
 class PlayerPrepartita{
     constructor(id, color, isMe){
         this.id = id;

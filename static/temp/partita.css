@@ -17,6 +17,9 @@ p{
   margin-top: 40px;
 }
 
-.player:hover{
+.player_info{
+  font-size: 16px;
+  color: lightgray;
   font-style: italic;
+  display: none;
 }
