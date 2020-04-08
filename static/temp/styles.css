@@ -2,6 +2,12 @@
     --theme-color: lightskyblue;
 }
 
+html{
+    overflow-x: hidden;
+    overflow-y: hidden;
+    cursor: default;
+}
+
 .match{
     position: relative;
     margin: 20px;

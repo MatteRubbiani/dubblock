@@ -180,13 +180,17 @@ class Block{
 }
 
 class PlayerPrepartita{
-    constructor(id, color){
+    constructor(id, color, isMe){
         this.id = id;
         this.parentId = "players";
         this.elementId = "player_"+id;
-        this.className = "player"
+        this.className = "player";
 
+        this.isMe = isMe;
         this.color = color;
+
+        this.isMeClassName = "its_me";
+        this.isMeLabel = "Tu";
     }
 
     appendPlayer(){
@@ -194,6 +198,77 @@ class PlayerPrepartita{
         div.id = this.elementId;
         div.className = this.className;
         div.style.backgroundColor = this.color;
+        if(this.isMe){
+            let p = document.createElement("p");
+            p.className = this.isMeClassName;
+            p.innerHTML = this.isMeLabel;
+            div.appendChild(p);
+        }
         document.getElementById(this.parentId).appendChild(div);
+    }
+
+    removePlayer(){
+        document.getElementById(this.parentId).removeChild(document.getElementById(this.elementId));
+    }
+}
+
+class SceltaPedina{
+    constructor(id, color, parentId){
+        this.id = id;
+        this.parentId = parentId;
+        this.elementId = "pedina_"+id;
+        this.className = "player";
+
+        this.color = color;
+    }
+
+    appendPedina(clickable){
+        var div = document.createElement("div");
+        div.id = this.elementId;
+        div.className = this.className;
+        div.style.backgroundColor = this.color;
+        if(clickable){
+        var context = this;
+            div.onclick = ()=>{
+                context.joinPrepartita(context.id);
+            }
+        }
+        document.getElementById(this.parentId).appendChild(div);
+    }
+
+    removePedina(){
+        document.getElementById(this.parentId).removeChild(document.getElementById(this.elementId));
+    }
+
+    joinPrepartita(color){
+        $.ajax({
+            url: BASE_URL+"join_prepartita/"+localStorage.getItem("UserId"),
+            type: "post",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({pedina_number: color}),
+            success: ()=>{
+                $("#choose_pedina_popup").hide();
+            },
+            error: (jq)=>{console.log(jq)}
+        })
+    }
+}
+
+class Input{
+    constructor(id, minValue, defaultValue){
+        this.id = id;
+        this.minValue = minValue;
+        $(id).html(defaultValue)
+    }
+
+    increase(){
+        var val = Number($(id).html());
+        $(id).html(val++);
+    }
+
+    decrease(){
+        var val = Number($(id).html());
+        if(val>this.minValue) $(id).html(val--);
     }
 }

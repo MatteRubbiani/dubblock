@@ -1,7 +1,4 @@
 html{
-    overflow-x: hidden;
-    overflow-y: hidden;
-    cursor: default;
     background-color: var(--theme-color);
     color: white;
 }

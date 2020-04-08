@@ -3,18 +3,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dubblock</title>
-    <link rel="stylesheet" href="styles/styles.css">
-    <link rel="stylesheet" href="styles/prepartita.css">
+    <link rel="stylesheet" href="../static/temp/styles.css">
+    <link rel="stylesheet" href="../static/temp/prepartita.css">
 </head>
-<body>
-    <script src="scripts/jquery.js"></script>
-    <script src="scripts/constants.js"></script>
-    <script src="scripts/classes.js"></script>
-    <script src="scripts/prepartita.js"></script>
-    <header class="--header">
-        <div id="players" class="players">
+
+<section id="choose_pedina_popup" onclick="$('#choose_pedina_popup').hide()">
+    <div id="pedine">
+        <h1>Scegli la tua pedina</h1>
+        <div id="lista_pedine">
+
         </div>
+    </div>
+</section>
+<section id="settings_popup">
+    <div class="options">
+        <div id="numero_corsie" class="box_choice">
+            <p><i class="arrow_up" id="up_corsie"></i></p>
+            <div id="numero_corsie_input" class="number_square  add_number">2</div>
+            <p><i class="arrow_down" id="down_corsie"></i></p>
+        </div>
+        <div id="numero_livelli" class="box_choice">
+            <p><i class="arrow_up" id="up_livelli"></i></p>
+            <div id="numero_livelli_input" class="number_square  add_number">1</div>
+            <p><i class="arrow_down" id="down_livelli"></i></p>
+        </div>
+            <div id="numero_blocchi" class="box_choice">
+            <p><i class="arrow_up" id="up_blocchi"></i></p>
+            <div id="numero_blocchi_input" class="number_square  add_number">1</div>
+            <p><i class="arrow_down" id="down_blocchi"></i></p>
+        </div>
+    </div>
+</section>
+<body>
+    <script src="../static/scripts/jquery.js"></script>
+    <script src="../static/scripts/constants.js"></script>
+    <script src="../static/scripts/classes.js"></script>
+    <script src="../static/scripts/prepartita.js"></script>
+    <header class="--header">
+        <div>
+            <h1>Giocatori pronti a cominciare:</h1>
+            <div id="players" class="players">
+            </div>
+        </div>
+        <button onclick="popupPedine()" id="join">Entra</button>
+        <button onclick="popupSettings()">Inizia a giocare!</button>
     </header>
-    
 </body>
 </html>
