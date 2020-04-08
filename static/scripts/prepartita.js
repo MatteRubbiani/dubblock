@@ -84,7 +84,12 @@ function exitPrepartita(){
         type: "post",
         contentType: "application/json",
         dataType: "json",
-        error: (jq)=>{console.log(jq)}
+        error: (jq)=>{console.log(jq)},
+        success: ()=>{
+          $("#join").html("Entra");
+          $("#join").prop("onclick", null).off("click");
+          $("#join").click(()=>{popupPedine()});
+        }
     })
 }
 

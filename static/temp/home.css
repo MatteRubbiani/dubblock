@@ -1,6 +1,6 @@
 html{
     background-color: var(--theme-color);
-    color: white;
+    color: black;
 }
 
 .--header{
@@ -30,21 +30,21 @@ html{
 }
 
 .creation_div{
-    border: 1px solid white;
+    border: 1px solid black;
     border-radius: 20px;
     padding: 10px 30px 10px 30px;
     width: 50%;
     height: fit-content;
     height: -moz-fit-content;
     text-align: center;
-    color: white;
+    color: black;
     margin-left: 25%;
     margin-top: 5%;
 }
 
 .creation_div:hover, .creation_div:focus{
-    background-color: white;
-    color: var(--theme-color);
+    color: white;
+    background-color: var(--second-color);
 }
 
 .creation_p{
@@ -64,7 +64,7 @@ html{
     height: 50px;
     box-shadow: none;
     border: 1px solid black;
-    font-size: 25px;    
+    font-size: 25px;
 }
 
 .join_lobby{
@@ -73,8 +73,8 @@ html{
     font-size: 25px;
     border-radius: 20px;
     padding: 10px;
-    background-color: var(--theme-color);
-    color: white;
+    background-color: var(--second-color);
+    color: black;
     outline: none;
 }
 

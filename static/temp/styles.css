@@ -1,5 +1,6 @@
 :root{
-    --theme-color: lightskyblue;
+    --theme-color: white;
+    --second-color: skyblue;
 }
 
 html{
@@ -14,18 +15,18 @@ html{
 }
 
 .corsia{
-    border-left: 1px solid white;
-    border-right: 1px solid white;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
     position: absolute;
 }
 
 .livello{
-    border-bottom: 1px solid white;
+    border-bottom: 2px solid black;
     position: absolute;
 }
 
 .block{
-    background-color: gray;
+    background-color: black;
     position: absolute;
     border-radius: 10px;
 }

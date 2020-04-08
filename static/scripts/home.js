@@ -48,7 +48,7 @@ function joinLobby(){
         success: (data)=>{
             window.localStorage.setItem("TagLobby", tag);
             window.localStorage.setItem("UserId", data);
-            window.location = "prepartita.html"//tag;
+            window.location = tag;
         },
         error: (jq)=>{
             if(jq.status == 432){

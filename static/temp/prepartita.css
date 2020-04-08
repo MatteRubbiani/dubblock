@@ -1,3 +1,14 @@
+.--title{
+    color: inherit;
+    text-align: center;
+}
+
+.title--title{
+    color: inherit;
+    text-align: center;
+    font-size: 60px;
+    font-weight: 800;
+}
 #choose_pedina_popup{
     position: fixed;
     width: 100%;
@@ -31,15 +42,30 @@
     display: inline-block;
     vertical-align: middle;
 }
+h1 {
 
-.--header button{
+}
+
+button{
     font-size: 40px;
-    background-color: var(--theme-color);
+    background-color: var(--second-color);
     border: 0px;
     padding: 15px;
     border-radius: 20px;
     color: white;
     outline: none;
+}
+
+#inizia_wrapper{
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  bottom: 100px;
+  left: 0px;
+}
+
+#inizia{
+
 }
 
 .--header h1{
@@ -58,7 +84,14 @@
     min-height: 120px;
     padding-bottom: 30px;
 }
-
+#players_wrapper{
+  width: 100%;
+  text-align:center;
+}
+#players{
+  margin: auto;
+  margin-bottom: 30px;
+}
 .player{
     display: inline-block;
     vertical-align: middle;
@@ -69,7 +102,7 @@
 }
 
 .its_me{
-    color: var(--theme-color);
+    color: var(--second-color);
     font-size: 25px;
     width: 100%;
     text-align: center;
@@ -87,18 +120,27 @@
 .options{
     background-color: white;
     margin: 10%;
+    border-radius: 20px;
+    width: fit-content;
+}
+
+.options_wrapper{
+  display: inline-block;
+  margin-left: 20px;
+  text-align: center;
 }
 
 .box_choice{
     position: relative;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     align-items: left;
     align-content: left;
     border: 0px solid lightgray;
     margin: 5px;
-    display: inline-block;
     vertical-align: middle;
+    font-size: 100px;
+
 }
 
 .box_choice:hover{
