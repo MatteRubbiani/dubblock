@@ -281,10 +281,13 @@ class Player{
         if(this.corsia != null){
             arrow.style.width = match.widthCorsia-20+"px";
             arrow.style.height = match.heightLivello-20+"px";
+            arrow.style.left = match.widthCorsia*this.corsia+Number(arrow.style.width.replace("px", ""))/2+5+"px";
+            arrow.style.top = match.heightLivello*this.livello-Number(arrow.style.height.replace("px", ""))/2+5+"px";
+        } else{
+            arrow.style.right = -35*map[this.livello]+"px";
+            arrow.style.top = match.heightLivello*this.livello+5+"px";
         }
         arrow.style.backgroundColor = coloriPedine[this.colorId];
-        arrow.style.top = match.heightLivello*this.livello-5+"px";
-        arrow.style.right = (this.corsia==null) ? -35*map[this.livello]+"px" : match.widthCorsia*(match.numeroCorsie-this.corsia)-5-match.widthCorsia/2+"px";
 
         try{
             document.getElementById(match.parentId).removeChild(document.getElementById(this.frecciaLivelloId));
