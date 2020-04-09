@@ -35,6 +35,7 @@ function loadInfo(){
                     $("#join").html("Esci");
                     $("#join").prop("onclick", null).off("click");
                     $("#join").click(()=>{exitPrepartita()});
+                    $("#inizia_wrapper").show();
                 } else{
                     $("#join").html("Entra");
                     $("#join").prop("onclick", null).off("click");
@@ -71,6 +72,7 @@ function exitPrepartita(){
         type: "post",
         contentType: "application/json",
         dataType: "json",
+        success: ()=>{$("#inizia_wrapper").hide()},
         error: (jq)=>{console.log(jq)}
     })
 }
@@ -91,7 +93,6 @@ function popupSettings(){
             $("#down_livelli").click(()=>{numeroLivelli.decrease()});
             $("#up_blocchi").click(()=>{numeroBlocchi.increase()});
             $("#down_blocchi").click(()=>{numeroBlocchi.decrease()});
-
             $("#settings_popup").show();
         },
         error: (jq)=>{console.log(jq)}

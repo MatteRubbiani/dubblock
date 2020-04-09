@@ -59,6 +59,7 @@ button{
   position: absolute;
   bottom: 100px;
   left: 0px;
+  display: none;
 }
 
 .--header h1{

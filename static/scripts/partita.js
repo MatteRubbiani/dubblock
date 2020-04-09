@@ -7,6 +7,24 @@ $(document).ready(()=>{
     interval = setInterval(loadInfo, 100);
 })
 
+function getGridDimensions(corsie, livelli){
+  var cellHeight = 3
+  var cellWidth = 2
+  var rawHeight = livelli * cellHeight
+  var rawWidth = corsie * cellWidth
+  var availableWidth = $(window).width() * 0.5
+  var availableHeight = $(window).height() * 0.6
+  var heightRatio = rawHeight / availableHeight
+  var widthRatio = rawWidth / availableWidth
+  if (widthRatio > heightRatio){
+    width = availableWidth
+    height = width * rawHeight / rawWidth
+  }else {
+    height = availableHeight
+    width = height * rawWidth / rawHeight
+  }
+  return [width, height]
+}
 function loadInfo(){
     if(localStorage.getItem("UserId")!=null){
         $.ajax({
@@ -26,7 +44,8 @@ function loadInfo(){
                     new Player(user.id, data.users.indexOf(user)+1, "players", user.pedina_number, user.is_playing, user.corsia, user.livello, user.jolly_reveal, user.jolly_earthquake).appendToListOfPlayers();
                 }
                 if(match==null){
-                    match = new Match(0, "match_parent", data.griglia.corsie, data.griglia.livelli, 200, 800);
+                    dimensions = getGridDimensions(data.griglia.corsie, data.griglia.livelli)
+                    match = new Match(0, "match_parent", data.griglia.corsie, data.griglia.livelli, dimensions[0], dimensions[1]);
                     match.createElement();
                     match.appendCorsie();
                     match.appendLivelli();

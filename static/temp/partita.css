@@ -43,9 +43,18 @@ p{
 }
 
 .match_section{
-  display: inline-block;
+  position: absolute;
+  top: 200px;
+  left: 15%;
   vertical-align: middle;
-  width: fit-content;
   width: -moz-fit-content;
   padding: 20px;
+  width: 70%;
+}
+
+#match_parent{
+  position: relative;
+  width: fit-content;
+  margin: auto;
+  padding: auto;
 }

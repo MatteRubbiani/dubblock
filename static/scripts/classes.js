@@ -13,7 +13,7 @@ class Match{
         this.numeroCorsie = numeroCorsie;
         this.corsie = [];
         this.widthCorsia = width/this.numeroCorsie;
-        
+
         this.numeroLivelli = numeroLivelli;
         this.livelli = [];
         this.heightLivello = height/this.numeroLivelli;
@@ -56,7 +56,7 @@ class Match{
         document.getElementById(this.elementId).removeChild(document.getElementById(this.blocks[position.livello][position.corsia].elementId));
         this.blocks[position.livello][position.corsia] = false;
     }
-    
+
     moveBlock(departure, arrival){
         try{
             if(!this.blocks[arrival.livello][arrival.corsia]){
@@ -160,7 +160,7 @@ class Block{
         this.height = widthCorsia*BLOCK_H_W_RATIO;
         this.widthCorsia = widthCorsia;
         this.heightLivello = heightLivello;
-        
+
         this.livelloId = livelloId;
         this.corsiaId = corsiaId;
     }
@@ -193,7 +193,7 @@ class Player{
 
         this.colorId = colorId;
         this.isPlaying = isPlaying;
-        
+
         this.corsia = corsia;
         this.livello = livello;
         this.jollyReveal = jollyReveal;
@@ -237,7 +237,7 @@ class Player{
             for(let node of div.childNodes) {
                 if(node != p){
                     node.style.display = "none";
-                }  
+                }
             }
         };
 
@@ -323,6 +323,7 @@ class SceltaPedina{
             data: JSON.stringify({pedina_number: color}),
             success: ()=>{
                 $("#choose_pedina_popup").hide();
+                $("#inizia_wrapper").show();
             },
             error: (jq)=>{console.log(jq)}
         })
