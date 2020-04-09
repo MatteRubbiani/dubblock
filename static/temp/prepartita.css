@@ -42,9 +42,6 @@
     display: inline-block;
     vertical-align: middle;
 }
-h1 {
-
-}
 
 button{
     font-size: 40px;
@@ -64,10 +61,6 @@ button{
   left: 0px;
 }
 
-#inizia{
-
-}
-
 .--header h1{
     font-size: 25px;
 }
@@ -84,6 +77,7 @@ button{
     min-height: 120px;
     padding-bottom: 30px;
 }
+
 #players_wrapper{
   width: 100%;
   text-align:center;
@@ -93,6 +87,7 @@ button{
   margin: auto;
   margin-bottom: 30px;
 }
+
 .player{
     display: inline-block;
     vertical-align: middle;
@@ -116,6 +111,7 @@ button{
     width: 100%;
     height: 100%;
     display: none;
+    z-index: 2;
 }
 
 .options{
@@ -129,6 +125,7 @@ button{
 
 .options_wrapper{
   display: inline-block;
+  vertical-align: middle;
   margin-left: 20px;
   text-align: center;
 }
@@ -137,37 +134,24 @@ button{
     position: relative;
     width: 150px;
     height: 150px;
-    align-items: left;
-    align-content: left;
-    border: 0px solid lightgray;
+    border: 1px solid lightgray;
     margin: 5px;
-    vertical-align: middle;
-    font-size: 100px;
-
 }
 
 .box_choice:hover{
-    border-width: 1px;
+    border-color: black;
     cursor: default;
 }
 
-.add_number{
-    width: 50px;
-    position: relative;
-    text-align: center;
-    margin-top: -12px;
-}
-
 .number_square{
-    width: 50px;
-    height: 50px;
-    margin-left: 25px;
-    margin-top: 5px;
+    width: 100%;
+    height: 100%;
     position: relative;
     text-align: center;
-    font-size: 50px;
+    font-size: 100px;
     font-family: Roboto;
     color: inherit;
+    margin-top: 0px;
 }
 
 .arrow_up {
@@ -178,9 +162,11 @@ button{
     transform: rotate(-135deg);
     -webkit-transform: rotate(-135deg);
     position: absolute;
-    left: 47px;
+    left: 70px;
     top: 10px;
     z-index: 1;
+    width: 5px;
+    height: 5px;
 }
 
 .arrow_down {
@@ -191,9 +177,11 @@ button{
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
     position: absolute;
-    left: 47px;
+    left: 70px;
     bottom: 10px;
     z-index: 1;
+    width: 5px;
+    height: 5px;
 }
 
 .arrow_up:hover{
@@ -203,7 +191,8 @@ button{
 .arrow_down:hover{
     border-color: black;
 }
+
 .conferma_wrapper{
-  padding-bottom: 10px;
+  padding: 10px;
   text-align: center;
 }

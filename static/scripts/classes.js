@@ -189,6 +189,7 @@ class Player{
         this.otherPlayerInfoClassName = "player_info";
 
         this.pInnerHTML = "Giocatore "+number;
+        if(corsia!=null) this.pInnerHTML+=" (Tu)";
 
         this.colorId = colorId;
         this.isPlaying = isPlaying;
@@ -201,7 +202,7 @@ class Player{
 
     appendToListOfPlayers(){
         let div = document.createElement("div");
-        div.id = this.elementId;
+        div.id = this.listElementId;
         div.style.width = "fit-content";
 
         let p = document.createElement("p");
@@ -227,7 +228,7 @@ class Player{
         div.appendChild(earthquake);
 
         div.onmouseover = ()=>{
-            p.style.fontWeight = 700;
+            p.style.fontWeight = 900;
             for(let node of div.childNodes) node.style.display = "block";
         };
 
@@ -241,9 +242,14 @@ class Player{
         };
 
         try{
-            document.getElementById(this.listId).removeChild(document.getElementById(this.elementId));
+            document.getElementById(this.listId).removeChild(document.getElementById(this.listElementId));
         }catch(e){}
         document.getElementById(this.listId).appendChild(div);
+
+        if(this.isPlaying){
+            $("#who_plays span").html(this.pInnerHTML);
+            $("#who_plays span").css("color", coloriPedine[this.colorId]);
+        }
     }
 }
 
@@ -331,12 +337,12 @@ class Input{
     }
 
     increase(){
-        var val = Number($(id).html());
-        $(id).html(val++);
+        var val = Number($(this.id).html());
+        $(this.id).html(val+1);
     }
 
     decrease(){
-        var val = Number($(id).html());
-        if(val>this.minValue) $(id).html(val--);
+        var val = Number($(this.id).html());
+        if(val>this.minValue) $(this.id).html(val-1);
     }
 }

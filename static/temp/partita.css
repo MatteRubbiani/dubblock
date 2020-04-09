@@ -5,21 +5,47 @@ p{
 #title{
   font-size: 50px;
   padding-left: 50px;
+  font-weight: 700;
 }
 
 #players{
   margin-left: 50px;
   margin-top: 50px;
+  width: fit-content;
+  width: -moz-fit-content;
+  max-width: 20%;
+  margin-right: 0px;
 }
 
 .player{
   font-size: 20px;
   margin-top: 40px;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .player_info{
   font-size: 16px;
-  color: lightgray;
+  color: gray;
   font-style: italic;
   display: none;
+}
+
+#who_plays{
+  position: absolute;
+  top: 50px;
+  right: 40px;
+}
+
+#who_plays p{
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.match_section{
+  display: inline-block;
+  vertical-align: middle;
+  width: fit-content;
+  width: -moz-fit-content;
+  padding: 20px;
 }
