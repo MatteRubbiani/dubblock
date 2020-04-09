@@ -290,7 +290,7 @@ class Player{
             document.getElementById(match.parentId).removeChild(document.getElementById(this.frecciaLivelloId));
         } catch(e){}
         document.getElementById(match.parentId).appendChild(arrow);
-        map[this.livello]++;
+        if(this.corsia==null) map[this.livello]++;
         return map;
     }
 }

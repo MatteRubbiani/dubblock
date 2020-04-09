@@ -40,11 +40,12 @@ function loadInfo(){
                     $("#join").html("Entra");
                     $("#join").prop("onclick", null).off("click");
                     $("#join").click(()=>{popupPedine()});
+                    $("#inizia_wrapper").hide();
                 }
             },
             error: (jq)=>{
                 if(jq.status == 401){
-                    clearInterval(t);
+                    clearInterval(interval);
                     window.location = window.location;
                 } else console.log(jq)
             }
