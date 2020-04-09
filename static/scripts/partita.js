@@ -1,5 +1,6 @@
 var interval;
 var match;
+var players = [];
 
 $(document).ready(()=>{
     if(localStorage.getItem("UserId")==null) createUser();
@@ -8,25 +9,24 @@ $(document).ready(()=>{
 })
 
 function getGridDimensions(corsie, livelli){
-  var cellHeight = 3
-  var cellWidth = 2
-  var rawHeight = livelli * cellHeight
-  var rawWidth = corsie * cellWidth
-  var availableWidth = $(window).width() * 0.5
-  var availableHeight = $(window).height() * 0.6
-  var heightRatio = rawHeight / availableHeight
-  var widthRatio = rawWidth / availableWidth
+  let gridHeight = livelli * CELLA_H_W_RATIO;
+  let gridWidth = corsie;
+  let availableWidth = $(window).width() * 0.6;
+  let availableHeight = $(window).height() * 0.6;
+  let heightRatio = gridHeight / availableHeight;
+  let widthRatio = gridWidth / availableWidth;
   if (widthRatio > heightRatio){
-    width = availableWidth
-    height = width * rawHeight / rawWidth
+    width = availableWidth;
+    height = width * gridHeight / gridWidth;
   }else {
     height = availableHeight
-    width = height * rawWidth / rawHeight
+    width = height * gridWidth / gridHeight;
   }
-  return [width, height]
+  return [width, height];
 }
 function loadInfo(){
-    if(localStorage.getItem("UserId")!=null){
+    if(localStorage.getItem("UserId")!=null && (match==null || !match.moving)){
+        players = [];
         $.ajax({
             url: BASE_URL+"get/"+localStorage.getItem("UserId"),
             type: "get",
@@ -40,15 +40,24 @@ function loadInfo(){
                     users: [{corsia: null(se non sei tu), id: int, is_playing: boolean, livello: int, pedina_number: int, jolly_reveal: int, jolly_earthquake: int}...{}]
                 }
                 */
-                for(let user of data.users){
-                    new Player(user.id, data.users.indexOf(user)+1, "players", user.pedina_number, user.is_playing, user.corsia, user.livello, user.jolly_reveal, user.jolly_earthquake).appendToListOfPlayers();
-                }
+               let map = new Array(data.griglia.livelli).fill(1);
                 if(match==null){
                     dimensions = getGridDimensions(data.griglia.corsie, data.griglia.livelli)
                     match = new Match(0, "match_parent", data.griglia.corsie, data.griglia.livelli, dimensions[0], dimensions[1]);
                     match.createElement();
                     match.appendCorsie();
                     match.appendLivelli();
+                    for(let blocco of data.blocchi) match.appendBlock(blocco);
+                } else {
+                    let newBlocks = (new Array(data.griglia.livelli)).fill().map(function(){ return new Array(data.griglia.corsie).fill(false);});
+                    for(let blocco of data.blocchi) newBlocks[blocco.livello][blocco.corsia]=true;
+                    match.updateBlocks(newBlocks);
+                }
+                for(let user of data.users){
+                    let p = new Player(user.id, data.users.indexOf(user)+1, "players", user.pedina_number, user.is_playing, user.corsia, user.livello, user.jolly_reveal, user.jolly_earthquake);
+                    p.appendToListOfPlayers();
+                    map = p.showLivello(match, map);
+                    players.push(p);
                 }
             }
         })

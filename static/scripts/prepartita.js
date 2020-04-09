@@ -100,9 +100,9 @@ function popupSettings(){
 }
 
 function startPartita(){
-    var corsie = Number($("numero_corsie_input").html());
-    var livelli = Number($("numero_livelli_input").html());
-    var blocchi = Number($("numero_blocchi_input").html());
+    var corsie = Number($("#numero_corsie_input").html());
+    var livelli = Number($("#numero_livelli_input").html());
+    var blocchi = Number($("#numero_blocchi_input").html());
     $.ajax({
         url: BASE_URL+"start_partita/"+localStorage.getItem("UserId"),
         type: "post",

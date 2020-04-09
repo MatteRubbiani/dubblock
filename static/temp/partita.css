@@ -20,8 +20,6 @@ p{
 .player{
   font-size: 20px;
   margin-top: 40px;
-  display: inline-block;
-  vertical-align: middle;
 }
 
 .player_info{
@@ -45,8 +43,7 @@ p{
 .match_section{
   position: absolute;
   top: 200px;
-  left: 15%;
-  vertical-align: middle;
+  left: 10%;
   width: -moz-fit-content;
   padding: 20px;
   width: 70%;

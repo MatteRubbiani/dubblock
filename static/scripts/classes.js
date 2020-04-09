@@ -46,7 +46,7 @@ class Match{
 
     appendBlock(newBlock){
         if(!this.blocks[newBlock.livello][newBlock.corsia]){
-            var n = new Block(newBlock.livello+","+newBlock.corsia, this.elementId, newBlock.livello, newBlock.corsia, this.widthCorsia, this.heightLivello);
+            var n = new Block(newBlock.id, this.elementId, newBlock.livello, newBlock.corsia, this.widthCorsia, this.heightLivello);
             this.blocks[newBlock.livello][newBlock.corsia] = n;
             n.displayBlock();
         }
@@ -99,6 +99,25 @@ class Match{
                 throw "Destination alredy taken";
             }
         } catch(e) {this.moving = false;}
+    }
+
+    updateBlocks(newBlocks){
+        var departure;
+        var arrival;
+        try{
+            for(let l=0; l<this.blocks.length; l++){
+                for(let c=0; c<this.blocks[l].length; c++){
+                    if(this.blocks[l][c]==false && newBlocks[l][c]){
+                        arrival = {corsia: c, livello: l};
+                    } else if(this.blocks[l][c]!=false && !newBlocks[l][c]){
+                        departure = {corsia: c, livello: l};
+                    }
+                }
+            }
+        } catch(e){console.log(e); return undefined;}
+        if(departure!=null && arrival!=null){
+            this.moveBlock(departure, arrival);
+        }
     }
 }
 
@@ -184,9 +203,12 @@ class Player{
         this.id = id;
         this.listId = listId;
         this.listElementId = "list_element_player_"+id;
+        this.frecciaLivelloId = "player_"+id+"_is_here";
 
         this.listPClassName = "player"
         this.otherPlayerInfoClassName = "player_info";
+        this.arrowClassName = "player_position_arrow";
+        this.pedinaClassName = "pedina"
 
         this.pInnerHTML = "Giocatore "+number;
         if(corsia!=null) this.pInnerHTML+=" (Tu)";
@@ -212,7 +234,7 @@ class Player{
 
         let livello = document.createElement("p");
         livello.className = this.otherPlayerInfoClassName;
-        livello.innerHTML = "Livello: "+this.livello;
+        livello.innerHTML = "Livello: "+(this.livello+1);
 
         let reveal = document.createElement("p");
         reveal.className = this.otherPlayerInfoClassName;
@@ -250,6 +272,26 @@ class Player{
             $("#who_plays span").html(this.pInnerHTML);
             $("#who_plays span").css("color", coloriPedine[this.colorId]);
         }
+    }
+
+    showLivello(match, map){
+        let arrow = document.createElement("p");
+        arrow.id = this.frecciaLivelloId;
+        arrow.className = (this.corsia==null) ? this.arrowClassName : this.pedinaClassName;
+        if(this.corsia != null){
+            arrow.style.width = match.widthCorsia-20+"px";
+            arrow.style.height = match.heightLivello-20+"px";
+        }
+        arrow.style.backgroundColor = coloriPedine[this.colorId];
+        arrow.style.top = match.heightLivello*this.livello-5+"px";
+        arrow.style.right = (this.corsia==null) ? -35*map[this.livello]+"px" : match.widthCorsia*(match.numeroCorsie-this.corsia)-5-match.widthCorsia/2+"px";
+
+        try{
+            document.getElementById(match.parentId).removeChild(document.getElementById(this.frecciaLivelloId));
+        } catch(e){}
+        document.getElementById(match.parentId).appendChild(arrow);
+        map[this.livello]++;
+        return map;
     }
 }
 

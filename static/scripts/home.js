@@ -10,7 +10,7 @@ $(document).ready(()=>{
     match.appendCorsie();
     match.appendLivelli();
     for(let i=0; i<numeroLivelli*4; i++){
-        match.appendBlock({livello: Math.floor(Math.random()*numeroLivelli), corsia: Math.floor(Math.random()*numeroCorsie)});
+        match.appendBlock({livello: Math.floor(Math.random()*numeroLivelli), corsia: Math.floor(Math.random()*numeroCorsie), id: i});
     }
     var t = setInterval(moveRandom, 100)
 })

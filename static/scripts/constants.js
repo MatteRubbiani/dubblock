@@ -1,6 +1,7 @@
 const BASE_URL = "https://dubblocksite.herokuapp.com/";
 const BLOCK_H_W_RATIO = 0.15;
-const coloriPedine = ["#000000", "#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff"]
+const coloriPedine = ["#3cb556", "#95c62c", "#f5d131", "#f29513", "#f23513", "#13f2a4", "#13bbf2", "#9d13f2", "f213c9", "#111869"]
+const CELLA_H_W_RATIO = 2/3;
 
 function createUser(){
     var tag = window.location.href.split("/")[window.location.href.split("/").length-1].split("?")[0];

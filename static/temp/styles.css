@@ -30,3 +30,16 @@ html{
     position: absolute;
     border-radius: 10px;
 }
+
+.player_position_arrow{
+    position: absolute;
+    width: 30px;
+    height: 10px;
+    border-radius: 10px 0px 0px 10px;
+
+}
+
+.pedina{
+    position: absolute;
+    border-radius: 20px;
+}
