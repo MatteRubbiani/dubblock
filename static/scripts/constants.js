@@ -27,7 +27,7 @@ function deleteUser() {
         contentType: "application/json",
         dataType: "json",
         success: () => { createUser(); },
-        error: (jq) => { console.log(jq) }
+        error: (jq) => { console.log(jq); }
     })
 }
 

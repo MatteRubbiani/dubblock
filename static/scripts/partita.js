@@ -16,13 +16,6 @@ function loadInfo(){
             contentType: "application/json",
             dataType: "json",
             success: (data)=>{
-                /*
-                {
-                    blocchi: [{corsia: int, id: int, livello: int}...{}],
-                    griglia: {corsie: int, livelli: int, status: int},
-                    users: [{corsia: null(se non sei tu), id: int, is_playing: boolean, livello: int, pedina_number: int, jolly_reveal: int, jolly_earthquake: int}...{}]
-                }
-                */
                let map = new Array(data.griglia.livelli).fill(1);
                 if(match==null){
                     let dimensions = getGridDimensions(data.griglia.corsie, data.griglia.livelli)

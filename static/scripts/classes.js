@@ -41,24 +41,40 @@ class Match {
                     var id = ev.target.id;
                     var livello = Number(id.split("-")[0]);
                     var corsia = Number(id.split("-")[1]);
-                    var id = ev.dataTransfer.getData("id");
                     var livello_iniziale = ev.dataTransfer.getData("livello");
                     var corsia_iniziale = ev.dataTransfer.getData("corsia");
-                    if (livello == livello_iniziale || (ev.dataTransfer.getData("forwardAllowed")!="false" && livello==Number(livello_iniziale)+1 && corsia==corsia_iniziale)) {
-                        ev.target.appendChild(document.getElementById(id));
-                        $.ajax({
-                            url: BASE_URL + "move_pedina/" + localStorage.getItem("UserId"),
-                            type: "post",
-                            contentType: "application/json",
-                            dataType: "json",
-                            data: JSON.stringify({ corsia: corsia, livello: livello }),
-                            success: () => {
-                                $(".cell").css("background-color", "white");
-                                $(".cell").css("border-color", "black");
-                            },
-                            error: (jq) => { console.log(jq) }
-                        })
+
+                    if (ev.dataTransfer.getData("idPedina") != "") {
+                        var id = ev.dataTransfer.getData("idPedina");
+                        if (livello == livello_iniziale || (ev.dataTransfer.getData("forwardAllowed") != "false" && livello == Number(livello_iniziale) + 1 && corsia == corsia_iniziale)) {
+                            ev.target.appendChild(document.getElementById(id));
+                            $.ajax({
+                                url: BASE_URL + "move_pedina/" + localStorage.getItem("UserId"),
+                                type: "post",
+                                contentType: "application/json",
+                                dataType: "json",
+                                data: JSON.stringify({ corsia: corsia, livello: livello }),
+                                error: (jq) => { console.log(jq) }
+                            })
+                        }
+                    } else {
+                        var id = ev.dataTransfer.getData("idBlocco");
+                        if (livello >= livello_iniziale && this.blocks[livello][corsia] == false) {
+                            ev.target.appendChild(document.getElementById("block_"+id));
+                            $.ajax({
+                                url: BASE_URL + localStorage.getItem("UserId") + "/" + id,
+                                type: "post",
+                                contentType: "application/json",
+                                dataType: "json",
+                                data: JSON.stringify({ corsia: corsia, livello: livello }),
+                                error: (jq) => { console.log(jq) }
+                            })
+                        }
                     }
+                    $(".cell").css("background-color", "white");
+                    $(".cell").css("border-color", "black");
+                    $(".block").css("border-color", "black");
+
                 };
                 cell.ondragover = (ev) => {
                     ev.preventDefault();
@@ -275,7 +291,7 @@ class Player {
         arrow.style.backgroundColor = coloriPedine[this.colorId];
         if (this.corsia != null) {
             document.getElementById(this.livello + "-" + this.corsia + "-cell").appendChild(arrow);
-            if(this.isPlaying) this.isYourTurn(match)
+            if (this.isPlaying) this.isYourTurn(match)
         } else {
             arrow.style.right = -35 * map[this.livello] + "px";
             arrow.style.top = match.heightLivello * this.livello + 5 + "px";
@@ -294,16 +310,31 @@ class Player {
             $("#" + this.livello + "-" + c + "-cell").css("background-color", "white");
             $("#" + this.livello + "-" + c + "-cell").css("border-color", coloriPedine[this.colorId]);
         }
-        if($("#" + this.livello + "-" + this.corsia + "-cell").children().length==1){
-            $("#" + (this.livello+1) + "-" + this.corsia + "-cell").css("background-color", "white");
-            $("#" + (this.livello+1) + "-" + this.corsia + "-cell").css("border-color", coloriPedine[this.colorId]);
+        if ($("#" + this.livello + "-" + this.corsia + "-cell").children().length == 1) {
+            $("#" + (this.livello + 1) + "-" + this.corsia + "-cell").css("background-color", "white");
+            $("#" + (this.livello + 1) + "-" + this.corsia + "-cell").css("border-color", coloriPedine[this.colorId]);
         }
         pedina.draggable = true;
         pedina.ondragstart = (ev) => {
-            ev.dataTransfer.setData("forwardAllowed", $("#" + this.livello + "-" + this.corsia + "-cell").children().length==1);
-            ev.dataTransfer.setData("id", ev.target.id);
+            ev.dataTransfer.setData("forwardAllowed", $("#" + this.livello + "-" + this.corsia + "-cell").children().length == 1);
+            ev.dataTransfer.setData("idPedina", ev.target.id);
             ev.dataTransfer.setData("livello", this.livello);
             ev.dataTransfer.setData("corsia", this.corsia);
+        }
+
+        for (let l = this.livello; l < match.numeroLivelli; l++) {
+            for (let c = 0; c < match.numeroCorsie; c++) {
+                try {
+                    let block = document.getElementById(match.blocks[l][c].elementId)
+                    block.style.borderColor = coloriPedine[this.colorId];
+                    block.draggable = true;
+                    block.ondragstart = (ev) => {
+                        ev.dataTransfer.setData("idBlocco", ev.target.id.split("_")[1]);
+                        ev.dataTransfer.setData("livello", l);
+                        ev.dataTransfer.setData("corsia", c);
+                    }
+                } catch (e) { }
+            }
         }
     }
 }
