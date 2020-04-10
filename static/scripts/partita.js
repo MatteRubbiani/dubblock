@@ -3,7 +3,6 @@ var match;
 var players = [];
 
 $(document).ready(()=>{
-    localStorage.setItem("UserId", "nt6UZAH9mR")
     if(localStorage.getItem("UserId")==null) createUser();
     if(localStorage.getItem("TagLobby")==null) setTagLobby();
     interval = setInterval(loadInfo, 100);
