@@ -16,12 +16,12 @@
     </header>
     <div id="match_example"></div>
     <div id="options">
-        <div class="creation_div">
-            <p class="creation_p" onclick="creaLobby()">Crea una lobby</p>
+        <div class="creation_div" id = "create_div">
+            <p id = "crea" class="creation_p" onclick="creaLobby()">Crea una lobby</p>
         </div>
-        <div class="creation_div">
+        <div class="creation_div" id="join_div">
             <p id="join_lobby_p" class="creation_p">Unisciti ad una lobby</p>
-            <input type="text" id="tag_lobby" placeholder="Tag della lobby" onchange="$('#error').hide()">
+            <input type="text" id="tag_lobby" placeholder="RIb2NhOfFo" onchange="$('#error').hide()">
             <button class="join_lobby" onclick="joinLobby()">UNISCITI</button>
             <p id="error">Impossibile accedere: lobby inesistente</p>
         </div>

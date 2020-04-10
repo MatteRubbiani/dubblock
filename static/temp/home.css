@@ -1,6 +1,7 @@
 html{
     background-color: var(--theme-color);
     color: black;
+    font-family: monospace;
 }
 
 .--header{
@@ -30,8 +31,6 @@ html{
 }
 
 .creation_div{
-    border: 1px solid black;
-    border-radius: 20px;
     padding: 10px 30px 10px 30px;
     width: 50%;
     height: fit-content;
@@ -39,19 +38,36 @@ html{
     text-align: center;
     color: black;
     margin-left: 25%;
-    margin-top: 5%;
 }
 
-.creation_div:hover, .creation_div:focus{
-    color: white;
-    background-color: var(--second-color);
+#create_div{
+    border-bottom: 3px solid red;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+#create_div:hover{
+  border:3px solid red;
+}
+
+#join_div{
+  margin-top: 10px;
+  border-top: 3px solid orange;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+#join_div:hover{
+  border: 3px solid orange;
 }
 
 .creation_p{
     text-align: center;
     font-size: 40px;
-    font-weight: 700;
     color: inherit;
+}
+
+#crea{
+  width: 100%;
 }
 
 #join_lobby_p{
@@ -60,11 +76,16 @@ html{
 
 #tag_lobby{
     outline: none;
+    border: 0;
     width: 80%;
     height: 50px;
     box-shadow: none;
-    border: 1px solid black;
+    border-bottom: 1px solid black;
     font-size: 25px;
+    text-align: center;
+}
+#tag_lobby:focus{
+  border-color: orange;
 }
 
 .join_lobby{
@@ -73,9 +94,12 @@ html{
     font-size: 25px;
     border-radius: 20px;
     padding: 10px;
-    background-color: var(--second-color);
     color: black;
     outline: none;
+}
+
+.join_lobby:hover{
+  color: orange;
 }
 
 #error{
