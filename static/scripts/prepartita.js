@@ -10,7 +10,6 @@ $(document).ready(()=>{
     if(localStorage.getItem("TagLobby")==null) setTagLobby();
     else if(localStorage.getItem("TagLobby")!=getTagLobby()){
         deleteUser();
-        createUser();
     }
     interval = setInterval(loadInfo, 100);
 })
