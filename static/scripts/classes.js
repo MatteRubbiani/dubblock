@@ -62,7 +62,7 @@ class Match {
                         if (livello >= livello_iniziale && this.blocks[livello][corsia] == false) {
                             ev.target.appendChild(document.getElementById("block_"+id));
                             $.ajax({
-                                url: BASE_URL + localStorage.getItem("UserId") + "/" + id,
+                                url: BASE_URL + "move_blocco/" + localStorage.getItem("UserId") + "/" + id,
                                 type: "post",
                                 contentType: "application/json",
                                 dataType: "json",
