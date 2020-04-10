@@ -4,6 +4,7 @@ class Match{
         this.parentId = parentId;
         this.elementId = "match_"+id;
         this.className = "match";
+        this.cellClassName = "cell";
 
         this.width = width;
         this.height = height;
@@ -22,26 +23,23 @@ class Match{
     }
 
     createElement(){
-        var div = document.createElement("div");
+        let div = document.createElement("div");
         div.id  = this.elementId;
         div.className = this.className;
         div.style.width = this.width+"px";
         div.style.height = this.height+"px";
+
+        for(let l=0; l<this.numeroLivelli; l++){
+            for(let c=0; c<this.numeroCorsie; c++){
+                let cell = document.createElement("div");
+                cell.id = l+"-"+c+"-cell";
+                cell.className = this.cellClassName;
+                cell.style.width = this.widthCorsia-2+"px";
+                cell.style.height = this.heightLivello-2+"px";
+                div.appendChild(cell);
+            }
+        }
         document.getElementById(this.parentId).appendChild(div);
-    }
-
-    appendCorsie(){
-        for(let i=0; i<this.numeroCorsie; i++){
-            this.corsie.push(new Corsia(i, this.elementId, this.widthCorsia, this.height));
-            this.corsie[i].display();
-        }
-    }
-
-    appendLivelli(){
-        for(let i=0; i<this.numeroLivelli; i++){
-            this.livelli.push(new Livello(i, this.elementId, this.width, this.heightLivello));
-            this.livelli[i].display();
-        }
     }
 
     appendBlock(newBlock){
@@ -121,54 +119,6 @@ class Match{
     }
 }
 
-class Corsia{
-    constructor(id, parentId, width, height){
-        this.id = id
-        this.parentId = parentId;
-        this.elementId  = "corsia_"+id;
-        this.className = "corsia";
-        this.width = width;
-        this.height = height;
-    }
-
-    display(){
-        try{
-            var corsia = document.createElement("div");
-            corsia.id = this.elementId;
-            corsia.className = this.className;
-            corsia.style.width = this.width+"px"
-            corsia.style.height = this.height+"px"
-            corsia.style.left = this.id*this.width  + "px";
-            corsia.style.top = "0px";
-            document.getElementById(this.parentId).appendChild(corsia);
-        } catch(e){console.log(e)}
-    }
-}
-
-class Livello{
-    constructor(id, parentId, width, height){
-        this.id = id
-        this.parentId = parentId;
-        this.elementId  = "livello_"+id;
-        this.className = "livello";
-        this.width = width;
-        this.height = height;
-    }
-
-    display(){
-        try{
-            var livello = document.createElement("div");
-            livello.id = this.elementId;
-            livello.className = this.className;
-            livello.style.width = this.width+"px"
-            livello.style.height = this.height+"px"
-            livello.style.left = "0px";
-            livello.style.top = this.id*this.height  + "px";
-            document.getElementById(this.parentId).appendChild(livello);
-        } catch(e){console.log(e)}
-    }
-}
-
 class Block{
     constructor(id, parentId, livelloId, corsiaId, widthCorsia, heightLivello){
         this.id = id;
@@ -204,6 +154,9 @@ class Player{
         this.listId = listId;
         this.listElementId = "list_element_player_"+id;
         this.frecciaLivelloId = "player_"+id+"_is_here";
+        this.livelloPId = "livello_label_"+id;
+        this.jollyRevealPId = "jolly_reveal_label_"+id;
+        this.jollyEarthquakePId = "jolly_earthquake_label_"+id;
 
         this.listPClassName = "player"
         this.otherPlayerInfoClassName = "player_info";
@@ -212,6 +165,9 @@ class Player{
 
         this.pInnerHTML = "Giocatore "+number;
         if(corsia!=null) this.pInnerHTML+=" (Tu)";
+        this.livelloInnerHTML = "Livello: ";
+        this.jollyRevealInnerHTML = "Jolly rivelazione rimanenti: ";
+        this.jollyEarthquakeInnerHTML = "Jolly terremoto rimanenti: ";
 
         this.colorId = colorId;
         this.isPlaying = isPlaying;
@@ -233,16 +189,19 @@ class Player{
         p.style.color = coloriPedine[this.colorId];
 
         let livello = document.createElement("p");
+        livello.id = this.livelloPId;
         livello.className = this.otherPlayerInfoClassName;
-        livello.innerHTML = "Livello: "+(this.livello+1);
+        livello.innerHTML = this.livelloInnerHTML+(this.livello+1);
 
         let reveal = document.createElement("p");
+        reveal.id = this.jollyRevealPId;
         reveal.className = this.otherPlayerInfoClassName;
-        reveal.innerHTML = "Jolly rivelazione rimanenti: "+this.jollyReveal;
+        reveal.innerHTML = this.jollyRevealInnerHTML+this.jollyReveal;
 
         let earthquake = document.createElement("p");
+        earthquake.id = this.jollyEarthquakePId;
         earthquake.className = this.otherPlayerInfoClassName;
-        earthquake.innerHTML = "Jolly terremoto rimanenti: "+this.jollyEarthquake;
+        earthquake.innerHTML = this.jollyEarthquakeInnerHTML+this.jollyEarthquake;
 
         div.appendChild(p);
         div.appendChild(livello);
@@ -271,6 +230,26 @@ class Player{
         if(this.isPlaying){
             $("#who_plays span").html(this.pInnerHTML);
             $("#who_plays span").css("color", coloriPedine[this.colorId]);
+            if(this.id == localStorage.getItem("UserId")) this.isYourTurn();
+            else $("#who_plays p p").hide();
+        }
+    }
+
+    updatePlayer(){
+        let livello = document.getElementById(this.livelloPId);
+        livello.innerHTML = this.livelloInnerHTML+this.livello;
+
+        let reveal = document.getElementById(this.jollyRevealPId);
+        reveal.innerHTML = this.jollyRevealInnerHTML+this.jollyReveal;
+
+        let earthquake = document.getElementById(this.jollyEarthquakePId);
+        earthquake.innerHTML = this.jollyEarthquakeInnerHTML+this.jollyEarthquake;
+
+        if(this.isPlaying){
+            $("#who_plays span").html(this.pInnerHTML);
+            $("#who_plays span").css("color", coloriPedine[this.colorId]);
+            if(this.id == localStorage.getItem("UserId")) this.isYourTurn();
+            else $("#who_plays p p").hide();
         }
     }
 
@@ -295,6 +274,14 @@ class Player{
         document.getElementById(match.parentId).appendChild(arrow);
         if(this.corsia==null) map[this.livello]++;
         return map;
+    }
+
+    isYourTurn(){
+        $("#who_plays p p").show();
+        // let pedina = document.getElementById(this.frecciaLivelloId);
+        // pedina.ondrop = (event)=>{
+
+        // }
     }
 }
 

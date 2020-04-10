@@ -7,8 +7,6 @@ var height = 500;
 $(document).ready(()=>{
     match = new Match(0, "match_example", numeroCorsie, numeroLivelli, width, height);
     match.createElement();
-    match.appendCorsie();
-    match.appendLivelli();
     for(let i=0; i<numeroLivelli*4; i++){
         match.appendBlock({livello: Math.floor(Math.random()*numeroLivelli), corsia: Math.floor(Math.random()*numeroCorsie), id: i});
     }

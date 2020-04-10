@@ -8,25 +8,8 @@ $(document).ready(()=>{
     interval = setInterval(loadInfo, 100);
 })
 
-function getGridDimensions(corsie, livelli){
-  let gridHeight = livelli * CELLA_H_W_RATIO;
-  let gridWidth = corsie;
-  let availableWidth = $(window).width() * 0.6;
-  let availableHeight = $(window).height() * 0.6;
-  let heightRatio = gridHeight / availableHeight;
-  let widthRatio = gridWidth / availableWidth;
-  if (widthRatio > heightRatio){
-    width = availableWidth;
-    height = width * gridHeight / gridWidth;
-  }else {
-    height = availableHeight
-    width = height * gridWidth / gridHeight;
-  }
-  return [width, height];
-}
 function loadInfo(){
     if(localStorage.getItem("UserId")!=null && (match==null || !match.moving)){
-        players = [];
         $.ajax({
             url: BASE_URL+"get/"+localStorage.getItem("UserId"),
             type: "get",
@@ -42,22 +25,28 @@ function loadInfo(){
                 */
                let map = new Array(data.griglia.livelli).fill(1);
                 if(match==null){
-                    dimensions = getGridDimensions(data.griglia.corsie, data.griglia.livelli)
+                    let dimensions = getGridDimensions(data.griglia.corsie, data.griglia.livelli)
                     match = new Match(0, "match_parent", data.griglia.corsie, data.griglia.livelli, dimensions[0], dimensions[1]);
                     match.createElement();
-                    match.appendCorsie();
-                    match.appendLivelli();
                     for(let blocco of data.blocchi) match.appendBlock(blocco);
                 } else {
                     let newBlocks = (new Array(data.griglia.livelli)).fill().map(function(){ return new Array(data.griglia.corsie).fill(false);});
                     for(let blocco of data.blocchi) newBlocks[blocco.livello][blocco.corsia]=true;
                     match.updateBlocks(newBlocks);
                 }
-                for(let user of data.users){
-                    let p = new Player(user.id, data.users.indexOf(user)+1, "players", user.pedina_number, user.is_playing, user.corsia, user.livello, user.jolly_reveal, user.jolly_earthquake);
-                    p.appendToListOfPlayers();
-                    map = p.showLivello(match, map);
-                    players.push(p);
+                if(JSON.stringify(players)=="[]"){
+                    for(let user of data.users){
+                        let p = new Player(user.id, data.users.indexOf(user)+1, "players", user.pedina_number, user.is_playing, user.corsia, user.livello, user.jolly_reveal, user.jolly_earthquake);
+                        p.appendToListOfPlayers();
+                        map = p.showLivello(match, map);
+                        players.push(p);
+                    }
+                } else{
+                    for(let i=0; i<players.length; i++){
+                        players[i] = new Player(data.users[i].id, i+1, "players", data.users[i].pedina_number, data.users[i].is_playing, data.users[i].corsia, data.users[i].livello, data.users[i].jolly_reveal, data.users[i].jolly_earthquake);
+                        players[i].updatePlayer();
+                        map = players[i].showLivello(match, map);
+                    }
                 }
             }
         })

@@ -8,7 +8,7 @@
 </head>
 
 <section id="choose_pedina_popup" onclick="$('#choose_pedina_popup').hide()">
-    <div id="pedine">
+    <div id="pedine" onclick="event.stopPropagation()">
         <h1>Scegli la tua pedina</h1>
         <div id="lista_pedine">
 
@@ -16,7 +16,7 @@
     </div>
 </section>
 <section id="settings_popup" onclick="$('#settings_popup').hide()">
-    <div class="options">
+    <div class="options" onclick="event.stopPropagation()">
       <div class="options_wrapper">
       <p>NUMERO CORSIE:</p>
         <div id="numero_corsie" class="box_choice">

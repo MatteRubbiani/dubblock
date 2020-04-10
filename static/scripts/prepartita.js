@@ -8,6 +8,10 @@ $(document).ready(()=>{
     document.getElementById("link").value = window.location.href;
     if(localStorage.getItem("UserId")==null) createUser();
     if(localStorage.getItem("TagLobby")==null) setTagLobby();
+    else if(localStorage.getItem("TagLobby")!=getTagLobby()){
+        deleteUser();
+        createUser();
+    }
     interval = setInterval(loadInfo, 100);
 })
 
@@ -128,5 +132,5 @@ function copyLinkToClipboard(){
   copyText.select();
   copyText.setSelectionRange(0, 99999); /*For mobile devices*/
   document.execCommand("copy");
-  document.getElementById("link").style.color = "var(--second-color)";
+  //document.getElementById("link").style.color = "var(--second-color)";
 }

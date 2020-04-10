@@ -14,15 +14,9 @@ html{
     margin: 20px;
 }
 
-.corsia{
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    position: absolute;
-}
-
-.livello{
-    border-bottom: 2px solid black;
-    position: absolute;
+.cell{
+    display: inline-block;
+    border: 1px solid black;
 }
 
 .block{
