@@ -5,6 +5,7 @@ for(let i=0; i<pedineDisponibili.length; i++) pedineDisponibili[i] = coloriPedin
 
 
 $(document).ready(()=>{
+    document.getElementById("link").value = window.location.href;
     if(localStorage.getItem("UserId")==null) createUser();
     if(localStorage.getItem("TagLobby")==null) setTagLobby();
     interval = setInterval(loadInfo, 100);
@@ -22,6 +23,13 @@ function loadInfo(){
                 for(let user of players) user.removePlayer();
                 players = [];
                 let isIn = false;
+                if(data.length == 0){
+                  $("#noPlayers").show()
+                  $("#players").hide()
+                }else {
+                  $("#noPlayers").hide()
+                  $("#players").show()
+                }
                 for(let user of data){
                     let p = new PlayerPrepartita(user.id, coloriPedine[user.pedina_number], user.id==localStorage.getItem("UserId"));
                     if(user.id==localStorage.getItem("UserId")){
@@ -113,4 +121,12 @@ function startPartita(){
         success: ()=>{window.location = window.location;},
         error: (jq)=>{console.log(jq);}
     })
+}
+
+function copyLinkToClipboard(){
+  var copyText = document.getElementById("link");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+  document.execCommand("copy");
+  document.getElementById("link").style.color = "var(--second-color)";
 }

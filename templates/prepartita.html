@@ -15,7 +15,7 @@
         </div>
     </div>
 </section>
-<section id="settings_popup">
+<section id="settings_popup" onclick="$('#settings_popup').hide()">
     <div class="options">
       <div class="options_wrapper">
       <p>NUMERO CORSIE:</p>
@@ -58,18 +58,23 @@
     <script src="static/scripts/prepartita.js"></script>
 
     <header class="--title">
-        <h1 class="title--title">Dubblock</h1>
+        <h1 class="title--title" onclick="location.href='/';" style="cursor: pointer;">Dubblock</h1>
     </header>
     <header class="--title">
         <div id="players_wrapper">
           <h1>Giocatori pronti a cominciare:</h1>
             <div id="players" class="players">
             </div>
+            <p id="noPlayers">Sei il primo. Invia il link della partita ai tuoi amici per iniziare a giocare!</p>
         </div>
         <button onclick="popupPedine()" id="join">Entra</button>
     </header>
     <div id= "inizia_wrapper">
       <button id = "inizia" onclick="popupSettings()">Inizia a giocare!</button>
+    </div>
+    <div class="share">
+      <input type="text" value="" id="link" readonly>
+      <button onclick="copyLinkToClipboard()" id="copyText">Copy</button>
     </div>
 </body>
 </html>
