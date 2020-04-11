@@ -30,6 +30,19 @@
       <br>-Muovere la tua pedina in avanti
       <br>-Spostare un blocco in un punto di livello maggiore o pari al tuo.
     </p>
+
+    <br>
+    <div class="buttons">
+      <div onclick="passaIlTurno()">
+        <p>Passa il turno</p>
+      </div>
+      <div onclick="jollyReveal()">
+        <p>Usa un jolly rivelazione (<span id="numero_reveal"></span> rimanenti)</p>
+      </div>
+      <div>
+        <p>Usa un jolly terremoto (<span id="numero_earthquake"></span> rimanenti)</p>
+      </div onclick="jollyEarthquake()">
+    </div>
   </section>
 
   <div>

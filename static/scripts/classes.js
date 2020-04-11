@@ -5,6 +5,7 @@ class Match {
         this.elementId = "match_" + id;
         this.className = "match";
         this.cellClassName = "cell";
+        this.divOfWinnersClassName = "winners";
 
         this.width = width;
         this.height = height;
@@ -38,9 +39,10 @@ class Match {
                 cell.style.height = this.heightLivello - 2 + "px";
                 cell.ondrop = (ev) => {
                     ev.preventDefault();
-                    var id = ev.target.id;
-                    var livello = Number(id.split("-")[0]);
-                    var corsia = Number(id.split("-")[1]);
+                    ev.target.style.borderStyle = "solid";
+                    ev.target.style.borderSpacing = "0px";
+                    var livello = Number(ev.target.id.split("-")[0]);
+                    var corsia = Number(ev.target.id.split("-")[1]);
                     var livello_iniziale = ev.dataTransfer.getData("livello");
                     var corsia_iniziale = ev.dataTransfer.getData("corsia");
 
@@ -54,33 +56,71 @@ class Match {
                                 contentType: "application/json",
                                 dataType: "json",
                                 data: JSON.stringify({ corsia: corsia, livello: livello }),
-                                error: (jq) => { console.log(jq) }
+                                error: (jq) => { console.log(jq) },
+                                complete: () => {
+                                    $(".cell").css("background-color", "white");
+                                    $(".cell").css("border-color", "black");
+                                    $(".block").css("border-color", "black");
+                                }
                             })
                         }
                     } else {
                         var id = ev.dataTransfer.getData("idBlocco");
                         if (livello >= livello_iniziale && this.blocks[livello][corsia] == false) {
-                            ev.target.appendChild(document.getElementById("block_"+id));
                             $.ajax({
                                 url: BASE_URL + "move_blocco/" + localStorage.getItem("UserId") + "/" + id,
                                 type: "post",
                                 contentType: "application/json",
                                 dataType: "json",
                                 data: JSON.stringify({ corsia: corsia, livello: livello }),
-                                error: (jq) => { console.log(jq) }
+                                error: (jq) => { console.log(jq) },
+                                complete: () => {
+                                    $(".cell").css("background-color", "white");
+                                    $(".cell").css("border-color", "black");
+                                    $(".block").css("border-color", "black");
+                                }
                             })
                         }
                     }
-                    $(".cell").css("background-color", "white");
-                    $(".cell").css("border-color", "black");
-                    $(".block").css("border-color", "black");
 
                 };
                 cell.ondragover = (ev) => {
                     ev.preventDefault();
                 }
+                cell.ondragenter = (ev) => {
+                    if (ev.target.className == "cell") {
+                        ev.target.style.borderStyle = "dashed";
+                        ev.target.style.borderSpacing = "10px";
+                    }
+                }
+                cell.ondragleave = (ev) => {
+                    ev.target.style.borderStyle = "solid";
+                    ev.target.style.borderSpacing = "0px";
+                }
                 div.appendChild(cell);
             }
+        }
+        document.getElementById(this.parentId).appendChild(div);
+    }
+
+    createDivOfWinners() {
+        let div = document.createElement("div");
+        div.className = this.divOfWinnersClassName;
+        div.style.width = this.width+"px";
+        div.ondrop = (ev) => {
+            ev.preventDefault();
+            if (ev.dataTransfer.getData("idPedina") != "") {
+                if (ev.dataTransfer.getData("livello") == this.numeroLivelli - 1) {
+                    if (ev.dataTransfer.getData("forwardAllowed") != "false") {
+                        ev.target.appendChild(document.getElementById(ev.dataTransfer.getData("idPedina")));
+                        ev.target.style.borderColor = document.getElementById(ev.dataTransfer.getData("idPedina")).style.backgroundColor;
+                        alert("You won");
+                    }
+                }
+            }
+        }
+        div.ondragover = (ev) => {
+            ev.preventDefault();
         }
         document.getElementById(this.parentId).appendChild(div);
     }
@@ -264,23 +304,26 @@ class Player {
     }
 
     updatePlayer() {
-        let livello = document.getElementById(this.livelloPId);
-        livello.innerHTML = this.livelloInnerHTML + this.livello;
+        try {
+            let livello = document.getElementById(this.livelloPId);
+            livello.innerHTML = this.livelloInnerHTML + this.livello;
 
-        let reveal = document.getElementById(this.jollyRevealPId);
-        reveal.innerHTML = this.jollyRevealInnerHTML + this.jollyReveal;
+            let reveal = document.getElementById(this.jollyRevealPId);
+            reveal.innerHTML = this.jollyRevealInnerHTML + this.jollyReveal;
 
-        let earthquake = document.getElementById(this.jollyEarthquakePId);
-        earthquake.innerHTML = this.jollyEarthquakeInnerHTML + this.jollyEarthquake;
+            let earthquake = document.getElementById(this.jollyEarthquakePId);
+            earthquake.innerHTML = this.jollyEarthquakeInnerHTML + this.jollyEarthquake;
 
-        if (this.isPlaying) {
-            $("#who_plays span").html(this.pInnerHTML);
-            $("#who_plays span").css("color", coloriPedine[this.colorId]);
-        }
+            if (this.isPlaying) {
+                $("#who_plays span").html(this.pInnerHTML);
+                $("#who_plays span").css("color", coloriPedine[this.colorId]);
+            }
+        } catch (e) { console.log(e); this.appendToListOfPlayers(); }
     }
 
     showLivello(match, map) {
         $("#rules").hide();
+        $(".buttons").hide();
         try {
             document.getElementById(this.frecciaLivelloId).parentNode.removeChild(document.getElementById(this.frecciaLivelloId));
         } catch (e) { }
@@ -304,8 +347,10 @@ class Player {
 
     isYourTurn(match) {
         $("#rules").show();
+        $(".buttons").show();
+        this.updateButtons();
         let pedina = document.getElementById(this.frecciaLivelloId);
-        $(".cell").css("background-color", "rgba(0, 0, 0, 0.5)");
+        $(".cell").css("background-color", "rgba(0, 0, 0, 0.2)");
         for (let c = 0; c < match.numeroCorsie; c++) {
             $("#" + this.livello + "-" + c + "-cell").css("background-color", "white");
             $("#" + this.livello + "-" + c + "-cell").css("border-color", coloriPedine[this.colorId]);
@@ -322,6 +367,11 @@ class Player {
             ev.dataTransfer.setData("corsia", this.corsia);
         }
 
+        let blocks = document.getElementsByClassName("block");
+        for (let b of blocks) {
+            b.draggable = false;
+            b.ondragstart = () => { return false; }
+        }
         for (let l = this.livello; l < match.numeroLivelli; l++) {
             for (let c = 0; c < match.numeroCorsie; c++) {
                 try {
@@ -336,6 +386,11 @@ class Player {
                 } catch (e) { }
             }
         }
+    }
+
+    updateButtons(){
+        $("#numero_reveal").html(this.jollyReveal);
+        $("#numero_earthquake").html(this.jollyEarthquake);
     }
 }
 

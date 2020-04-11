@@ -13,13 +13,12 @@ p{
   margin-top: 50px;
   width: fit-content;
   width: -moz-fit-content;
-  max-width: 20%;
-  margin-right: 0px;
 }
 
 .player{
   font-size: 20px;
   margin-top: 40px;
+  max-width: 300px;
 }
 
 .player_info{
@@ -27,6 +26,7 @@ p{
   color: gray;
   font-style: italic;
   display: none;
+  max-width: 300px;
 }
 
 #who_plays{
@@ -35,18 +35,22 @@ p{
   right: 40px;
 }
 
-#who_plays p{
-  font-size: 25px;
+#who_plays p:first-child{
   font-weight: 700;
+  font-size: 25px;
+}
+
+#rules{
+  font-size: 20px;
 }
 
 .match_section{
   position: absolute;
-  top: 200px;
-  left: 10%;
+  top: 120px;
+  left: 20%;
   width: -moz-fit-content;
   padding: 20px;
-  width: 70%;
+  width: 30%;
 }
 
 #match_parent{
@@ -54,4 +58,29 @@ p{
   width: fit-content;
   margin: auto;
   padding: auto;
+}
+
+.buttons{
+  display: none;
+}
+
+.buttons div{
+  border: 3px solid red;
+  border-radius: 10px;
+  margin: 20px; 
+  border-style: dashed;
+  border-spacing: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.buttons div:hover{
+  border-style: solid;
+}
+
+.buttons p{
+  font-weight: 500;
+  font-size: 20px;
+  width: fit-content;
+  width: -moz-fit-content;
 }
