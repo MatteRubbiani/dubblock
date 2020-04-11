@@ -322,8 +322,6 @@ class Player {
     }
 
     showLivello(match, map) {
-        $("#rules").hide();
-        $(".buttons").hide();
         try {
             document.getElementById(this.frecciaLivelloId).parentNode.removeChild(document.getElementById(this.frecciaLivelloId));
         } catch (e) { }
@@ -335,6 +333,10 @@ class Player {
         if (this.corsia != null) {
             document.getElementById(this.livello + "-" + this.corsia + "-cell").appendChild(arrow);
             if (this.isPlaying) this.isYourTurn(match)
+            else {
+                $("#rules").hide();
+                $(".buttons").hide();
+            }
         } else {
             arrow.style.right = -35 * map[this.livello] + "px";
             arrow.style.top = match.heightLivello * this.livello + 5 + "px";

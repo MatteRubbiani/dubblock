@@ -52,26 +52,36 @@ function loadInfo() {
     }
 }
 
-function passaIlTurno(){
+function passaIlTurno() {
     $.ajax({
         url: BASE_URL + "passa/" + localStorage.getItem("UserId"),
         type: "post",
         contentType: "application/json",
         dataType: "json",
+        success: () => {
+            $(".cell").css("background-color", "white");
+            $(".cell").css("border-color", "black");
+            $(".block").css("border-color", "black");
+        },
         error: (jq) => { console.log(jq) }
     })
 }
 
-function jollyEarthquake(){
+function jollyEarthquake() {
     $.ajax({
         url: BASE_URL + "jolly_earthquake/" + localStorage.getItem("UserId"),
-        type: "post",
+        type: "get",
         contentType: "application/json",
         dataType: "json",
+        success: ()=>{
+            document.getElementById(match.parentId).removeChild(document.getElementById(match.elementId));
+            document.getElementById(match.parentId).removeChild(document.getElementsByClassName(match.divOfWinnersClassName)[0]);
+            match = null;
+        },
         error: (jq) => { console.log(jq) }
     })
 }
 
-function jollyReveal(){
-    
+function jollyReveal() {
+
 }
