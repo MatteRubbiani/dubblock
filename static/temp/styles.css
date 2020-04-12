@@ -54,7 +54,5 @@ html{
     border: 2px solid black;
     border-radius: 20px;
     margin: 20px;
-    height: fit-content;
-    height: -moz-fit-content;
-    min-height: 50px;
+    height: 100px;
 }

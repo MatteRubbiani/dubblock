@@ -30,7 +30,8 @@ function loadInfo() {
                         for (let blocco of data.blocchi) newBlocks[blocco.livello][blocco.corsia] = true;
                         match.updateBlocks(newBlocks);
                     }
-                    if (JSON.stringify(players) == "[]") {
+                    if (JSON.stringify(players) == "[]" || data.users.length != players.lenght ) {
+                      players = []
                         for (let user of data.users) {
                             let p = new Player(user.id, data.users.indexOf(user) + 1, "players", user.pedina_number, user.is_playing, user.corsia, user.livello, user.jolly_reveal, user.jolly_earthquake);
                             p.appendToListOfPlayers();
