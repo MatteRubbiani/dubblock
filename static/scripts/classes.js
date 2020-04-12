@@ -114,7 +114,19 @@ class Match {
                     if (ev.dataTransfer.getData("forwardAllowed") != "false") {
                         ev.target.appendChild(document.getElementById(ev.dataTransfer.getData("idPedina")));
                         ev.target.style.borderColor = document.getElementById(ev.dataTransfer.getData("idPedina")).style.backgroundColor;
-                        alert("You won");
+                        $.ajax({
+                            url: BASE_URL + "move_pedina/" + localStorage.getItem("UserId"),
+                            type: "post",
+                            contentType: "application/json",
+                            dataType: "json",
+                            data: JSON.stringify({corsia: 0, livello: this.numeroLivelli}),
+                            error: (jq) => { console.log(jq) },
+                            complete: () => {
+                                $(".cell").css("background-color", "white");
+                                $(".cell").css("border-color", "black");
+                                $(".block").css("border-color", "black");
+                            }
+                        })
                     }
                 }
             }
