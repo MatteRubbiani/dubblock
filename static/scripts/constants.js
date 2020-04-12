@@ -1,6 +1,6 @@
 const BASE_URL = "https://dubblocksite.herokuapp.com/";
 const BLOCK_H_W_RATIO = 0.15;
-const coloriPedine = ["#3cb556", "#95c62c", "#f5d131", "#f29513", "#f23513", "#13f2a4", "#13bbf2", "#9d13f2", "f213c9", "#111869"]
+const coloriPedine = ["#3cb556", "#95c62c", "#f5d131", "#f29513", "#f23513", "#13f2a4", "#13bbf2", "#9d13f2", "#f213c9", "#111869"]
 const CELLA_H_W_RATIO = 2/3;
 const maxGridWidth = 0.6;
 const maxGridHeight = 0.6;
