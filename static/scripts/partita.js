@@ -32,6 +32,7 @@ function loadInfo() {
                     }
                     if (JSON.stringify(players) == "[]" || data.users.length != players.lenght ) {
                       players = []
+                      clearListOfPlayers();
                         for (let user of data.users) {
                             let p = new Player(user.id, data.users.indexOf(user) + 1, "players", user.pedina_number, user.is_playing, user.corsia, user.livello, user.jolly_reveal, user.jolly_earthquake);
                             p.appendToListOfPlayers();
@@ -44,6 +45,9 @@ function loadInfo() {
                             players[i].updatePlayer();
                             map = players[i].showLivello(match, map);
                         }
+                    }
+                    for(let w of data.winners){
+                        new Player(w.id, null, null, w.pedina_number, null, null, null, null, null).showWinner(match);
                     }
                 }
             })
@@ -85,4 +89,13 @@ function jollyEarthquake() {
 
 function jollyReveal() {
 
+}
+
+function clearListOfPlayers(){
+    let parent = document.getElementById("players");
+    let child = parent.lastChild;
+    while(child){
+        parent.removeChild(child);
+        child = parent.lastChild;
+    }
 }

@@ -6,6 +6,7 @@ class Match {
         this.className = "match";
         this.cellClassName = "cell";
         this.divOfWinnersClassName = "winners";
+        this.winnerClassName = "winner";
 
         this.width = width;
         this.height = height;
@@ -106,7 +107,7 @@ class Match {
     createDivOfWinners() {
         let div = document.createElement("div");
         div.className = this.divOfWinnersClassName;
-        div.style.width = this.width+"px";
+        div.style.width = this.width + "px";
         div.ondrop = (ev) => {
             ev.preventDefault();
             if (ev.dataTransfer.getData("idPedina") != "") {
@@ -114,12 +115,13 @@ class Match {
                     if (ev.dataTransfer.getData("forwardAllowed") != "false") {
                         ev.target.appendChild(document.getElementById(ev.dataTransfer.getData("idPedina")));
                         ev.target.style.borderColor = document.getElementById(ev.dataTransfer.getData("idPedina")).style.backgroundColor;
+                        document.getElementById(ev.dataTransfer.getData("idPedina")).className = this.winnerClassName;
                         $.ajax({
                             url: BASE_URL + "move_pedina/" + localStorage.getItem("UserId"),
                             type: "post",
                             contentType: "application/json",
                             dataType: "json",
-                            data: JSON.stringify({corsia: 0, livello: this.numeroLivelli}),
+                            data: JSON.stringify({ corsia: 0, livello: this.numeroLivelli }),
                             error: (jq) => { console.log(jq) },
                             complete: () => {
                                 $(".cell").css("background-color", "white");
@@ -310,8 +312,8 @@ class Player {
         document.getElementById(this.listId).appendChild(div);
 
         if (this.isPlaying) {
-            $("#who_plays span").html(this.pInnerHTML);
-            $("#who_plays span").css("color", coloriPedine[this.colorId]);
+            $("#who_plays_label").html(this.pInnerHTML);
+            $("#who_plays_label").css("color", coloriPedine[this.colorId]);
         }
     }
 
@@ -327,8 +329,8 @@ class Player {
             earthquake.innerHTML = this.jollyEarthquakeInnerHTML + this.jollyEarthquake;
 
             if (this.isPlaying) {
-                $("#who_plays span").html(this.pInnerHTML);
-                $("#who_plays span").css("color", coloriPedine[this.colorId]);
+                $("#who_plays_label").html(this.pInnerHTML);
+                $("#who_plays_label").css("color", coloriPedine[this.colorId]);
             }
         } catch (e) { console.log(e); this.appendToListOfPlayers(); }
     }
@@ -357,6 +359,17 @@ class Player {
         }
 
         return map;
+    }
+
+    showWinner(match) {
+        try {
+            document.getElementById(this.frecciaLivelloId).parentNode.removeChild(document.getElementById(this.frecciaLivelloId));
+        } catch (e) { };
+        let d = document.createElement("div");
+        d.id = "player_" + this.id + "_is_here";
+        d.className = match.winnerClassName;
+        d.style.backgroundColor = coloriPedine[this.colorId];
+        document.getElementsByClassName(match.divOfWinnersClassName)[0].appendChild(d);
     }
 
     isYourTurn(match) {
@@ -402,7 +415,7 @@ class Player {
         }
     }
 
-    updateButtons(){
+    updateButtons() {
         $("#numero_reveal").html(this.jollyReveal);
         $("#numero_earthquake").html(this.jollyEarthquake);
     }
